@@ -144,7 +144,7 @@ class iqy:
             "uid": self.P00003,
             "ori": "pcw",
             "ps": "0",
-            "k_uid": "dc7c8156286e94182d2843ada4ef6050",
+            "k_uid": self.QC005,
             "pt": "0",
             "d": "0",
             "s": "",
