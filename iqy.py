@@ -4,8 +4,8 @@ import time
 from urllib import parse
 import requests
 from tabulate import tabulate
-from pywidevineb.L3.cdm import deviceconfig
-from pywidevineb.L3.decrypt.wvdecryptcustom import WvDecrypt
+from pywidevine.L3.cdm import deviceconfig
+from pywidevine.L3.decrypt.wvdecryptcustom import WvDecrypt
 from tools import dealck, md5, get_size, get_pssh
 
 

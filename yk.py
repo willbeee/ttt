@@ -5,8 +5,8 @@ from urllib.parse import parse_qsl, urlsplit
 import base64
 from Crypto.Cipher import AES
 from tabulate import tabulate
-from pywidevineb.L3.cdm import deviceconfig
-from pywidevineb.L3.decrypt.wvdecryptcustom import WvDecrypt
+from pywidevine.L3.cdm import deviceconfig
+from pywidevine.L3.decrypt.wvdecryptcustom import WvDecrypt
 from tools import get_pssh, dealck
 
 requests = requests.Session()
@@ -142,10 +142,10 @@ class YouKu:
                     cmd = f"{common_args} --key {key}  -M format=mp4"
                 else:
                     txt = f'''
-                    #OUT,{savepath}
-                    #DECMETHOD,ECB
-                    #KEY,{key}
-                    {title}_{resolution}_{size},{m3u8_url}
+#OUT,{savepath}
+#DECMETHOD,ECB
+#KEY,{key}
+{title}_{resolution}_{size},{m3u8_url}
                     '''
                     with open("{}.txt".format(title), "a", encoding="gbk") as f:
                         f.write(txt)
