@@ -215,7 +215,7 @@ class Txckey:
             h = (h << 5) - h + ord(c)
         return str(h & 0xffffffff)
 
-    def ckey81(self, vid, tm, appVer='3.5.57', guid='52f0ea142b32b633', platform="10201",
+    def ckey81(self, vid, tm, appVer='3.5.57', guid='', platform="10201",
                url="https://v.qq.com/x/cover/mzc00200b4jsdq6/l00469csvi7.html"):
         url = url[0:48]
         navigator = self.userAgent[0:48]
@@ -395,16 +395,13 @@ class TX:
             "defn": defn,
             "ehost": url,
             "refer": url,
-            "platform": "10201",
             "guid": self.guid,
             "cKey": ckey,
             "logintoken": json.dumps(self.logintoken, separators=(',', ':')),
             "tm": tm,
             "charge": "0",
             "otype": "ojson",
-            "defnpayver": "3",
             "spau": "1",
-            "spaudio": "0",
             "spwm": "1",
             "sphls": "2",
             "host": "v.qq.com",
@@ -418,18 +415,21 @@ class TX:
             "auth_from": "",
             "auth_ext": "",
             "fhdswitch": "0",
-            "dtype": "3",
             "spsrt": "2",
             "lang_code": "0",
             "spvvpay": "1",
             "spadseg": "3",
-            "spav1": "15",
-            "hevclv": "33",
-            "spsfrhdr": "0",
-            "spvideo": "0",
             "spm3u8tag": "67",
             "spmasterm3u8": "3",
-            "drm": "40"
+            "drm": "40",
+            "platform": "10201",
+            "dtype": 3,
+            "spav1": 15,
+            "hevclv": 28,
+            "spsfrhdr": 100,
+            "spvideo": 1044,
+            "spaudio": 70,
+            "defnpayver": 7
         }
         response = self.re.get("https://h5vv6.video.qq.com/getinfo", params=params)
         data = response.json()
@@ -581,6 +581,6 @@ class TX:
 
 
 if __name__ == '__main__':
-    ck = ""
+    ck = ''
     tx = TX(ck)
     tx.run()
