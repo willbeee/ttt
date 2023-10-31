@@ -141,7 +141,7 @@ class iqy:
             "authKey": authKey,
             "dfp": self.dfp,
             "pck": self.pck,
-            "vid": "1a8f034982b6e3f0b98d84545042b221",
+            "vid": "",
             "tm": tm,
             "vt": "0",
             "rs": "1",
@@ -185,7 +185,6 @@ class iqy:
         params = self.get_param(tvid=tvid, vid=vid)
         url = "https://cache.video.iqiyi.com" + params
         res = self.requests.get(url)
-        print(res.url)
         return res.json()
 
     def run(self, url=None):
@@ -276,7 +275,7 @@ class iqy:
                             pssh = get_pssh(init)
                             key_string = get_key(pssh)
                             cmd = f"N_m3u8DL-RE.exe \"{file} \" --tmp-dir ./cache --save-name \"{name}\" --save-dir \"{savepath}\" --thread-count 16 --download-retry-count 30 --auto-select --check-segments-count " + key_string + " --decryption-binary-path ./mp4decrypt.exe  -M format=mp4"
-                        elif m3u8data.startswith('<?xml'):
+                        if m3u8data.startswith('<?xml'):
                             pssh = m3u8data.split('<cenc:pssh>')[1].split('</cenc:pssh>')[0]
                             key_string = get_key(pssh)
                             cmd = f"N_m3u8DL-RE.exe \"{file} \" --tmp-dir ./cache --save-name \"{name}\" --save-dir \"{savepath}\" --thread-count 16 --download-retry-count 30 --auto-select --check-segments-count " + key_string + " --decryption-binary-path ./mp4decrypt.exe  -M format=mp4"
@@ -293,6 +292,6 @@ class iqy:
 
 
 if __name__ == '__main__':
-    ck = ""
+    ck = "QC006=82xoyqrjtjwyrd7nehudmriw; TQC030=1; QP0030=1; T00404=2343543dc6c1a4c989afc26634bc4035; QC173=0; QC196=1.25; P00004=.1683876317.d77101f60b; QC005_NATIVE=qayesqutkr24xan2kkxftxrs7bffuyrk; QP0034=%7B%22v%22%3A15%2C%22dp%22%3A1%2C%22dm%22%3A%7B%22wv%22%3A1%7D%2C%22m%22%3A%7B%22wm-vp9%22%3A1%2C%22wm-av1%22%3A1%2C%22m4-hevc%22%3A1%7D%2C%22hvc%22%3Atrue%7D; QC206=29801f279c097b36f32fcb79c40a860e; QC207=51bca9c79cb8d92b7a08b1c06031293b; QC212=d67d53a5e61387e5763058e76f3b829c; QC211=ff9431e4d428e01287bf5b7305795a33; QC005_PCA=qayesqutkr24xan2kkxftxrs7bffuyrk; P00003_PCA=1086805810091691; isRefreshAuth=1; QC021=%5B%7B%22key%22%3A%22%E7%8B%AC%E5%AE%B6%E4%BF%AE%E5%A4%8D%E7%89%88%22%7D%5D; QC008=1683260350.1698390017.1698745904.19; QC007=DIRECT; QC191=; nu=0; P00040=Cl5GWWhCNmpPJTJCNDZrVnRXNlJIV0thTEFuYzZydjFwbUtuZDB3UFJvWFRvaVE2SUEyVzh6S1U2WlB5bHRvc1Y2RU93U0huOERYeVZmZUUyOHJVR2IyZ0F3JTNEJTNEEAEqATEwAFAEYABqIHFheWVzcXV0a3IyNHhhbjJra3hmdHhyczdiZmZ1eXJrggFCaHR0cHM6Ly9wYXNzcG9ydC5pcWl5aS5jb20vYXBpcy90aGlyZHBhcnR5L25jYWxsYmFjay5hY3Rpb24/ZnJvbT00iAEBkAEAyAEB2gEUMDEwMTAwMjEwMTAwMDAwMDAwMDCaAitodHRwczovL3d3dy5pcWl5aS5jb20vdGhpcmRsb2dpbi9jbG9zZS5odG1sogIraHR0cHM6Ly93d3cuaXFpeWkuY29tL3RoaXJkbG9naW4vY2xvc2UuaHRtbKoCATG6AgEx; P111114=1698745914; QC160=%7B%22type%22%3A-1%2C%22conformLoginType%22%3A0%7D; QP0037=30; T00700=EgcI9L-tIRABEgcI58DtIRABEgcIq8HtIRABEgcIrcHtIRAB; P00001=c7pbpYvm3XYJHm1YwBT6um2BjOhDqm117ReL29jpSXlCoJaxtm3vQaZbgrNwRpYsbi3vv812b; P00007=c7pbpYvm3XYJHm1YwBT6um2BjOhDqm117ReL29jpSXlCoJaxtm3vQaZbgrNwRpYsbi3vv812b; P00003=1086805810091691; P00002=%7B%22uid%22%3A1086805810091691%2C%22pru%22%3A1086805810091691%2C%22user_name%22%3A%22199****6024%22%2C%22nickname%22%3A%22%5Cu7528%5Cu62373dc71b24016ab%22%2C%22pnickname%22%3A%22%5Cu7528%5Cu62373dc71b24016ab%22%2C%22type%22%3A11%2C%22email%22%3A%22%22%7D; P00010=1086805810091691; P01010=1698768000; P00PRU=1086805810091691; __dfp=a10658c0bdc3fd4e3c91a7f23a29c5fc2d62d8a52f4d88a3ad44132c1bd1e30c9e@1699586507505@1698290508505; QC175=%7B%22upd%22%3Afalse%2C%22ct%22%3A1698745952424%7D; QC170=1; QC179=%7B%22vipTypes%22%3A%2214%2C13%2C4%22%2C%22vipType%22%3A%224%22%2C%22userIcon%22%3A%22%2F%2Fimg7.iqiyipic.com%2Fpassport%2F20230104%2Fce%2Fdf%2Fpassport_1086805810091691_167280232017376_130_130.jpg%22%2C%22uid%22%3A1086805810091691%2C%22iconPendant%22%3A%22%22%2C%22bannedVip%22%3Afalse%2C%22allVip%22%3Atrue%2C%22validVip%22%3Atrue%7D; QC163=1; QP0013=13%2C4%2C5%2C14; QP0014=3; QC188=false; QY_PUSHMSG_ID=erf75cgwo524xan2kkxftxrs7b6tsf5k; QP0033=1; QP0035=5; QP0025=1; QC189=5257_B%2C6082_B%2C5335_B%2C5465_B%2C6843_B%2C6832_C%2C5924_D%2C6151_C%2C5468_B%2C7074_C%2C5592_B%2C6031_B%2C7024_A%2C6629_B%2C5670_B%2C7301_B%2C6050_B%2C6578_B%2C6312_B%2C6091_B%2C7090_B%2C6237_B%2C6249_C%2C6704_C%2C6752_C%2C7150_B%2C7332_B; QC186=true; QC187=true; QC005=erf75cgwo524xan2kkxftxrs7b6tsf5k; QC010=247102720; QP0027=26; QC208=ba461b3854181e46273ed0a3d00b79a2; websocket=true; QY00001=1086805810091691; IMS=IggQABj_yISqBioqCiAzMGJiNmFlZTBkNjMxMGY3MGZjNmMwMDVkNDliNjQ2NRAAIgAoRDAFciQKIDMwYmI2YWVlMGQ2MzEwZjcwZmM2YzAwNWQ0OWI2NDY1EACCAQCKASQKIgogMzBiYjZhZWUwZDYzMTBmNzBmYzZjMDA1ZDQ5YjY0NjU; QP008=120; QC193=7791938234030700%2C1964%2C123%3B5652561918212800%2C2198%2C79%3B2904341724243800%2C2788%2C97%3B1810989673848200%2C2755%2C96%3B6822119723349900%2C6354%2C0; QP0036=20231031%7C84.512"
     iq = iqy(ck)
     iq.run()
