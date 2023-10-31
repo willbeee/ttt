@@ -11,7 +11,7 @@ from tools import dealck, md5, get_size, get_pssh
 
 def get_key(pssh):
     LicenseUrl = "https://drml.video.iqiyi.com/drm/widevine?ve=0"
-    wvdecrypt = WvDecrypt(init_data_b64=pssh, device=deviceconfig.device_android_generic)
+    wvdecrypt = WvDecrypt(init_data_b64=pssh, cert_data_b64="",device=deviceconfig.device_android_generic)
     widevine_license = requests.post(url=LicenseUrl, data=wvdecrypt.get_challenge())
     license_b64 = base64.b64encode(widevine_license.content)
     wvdecrypt.update_license(license_b64)
@@ -31,10 +31,8 @@ class iqy:
         self.dfp = ckjson.get('__dfp', "").split("@")[0]
         self.QC005 = ckjson.get('QC005', "")
         self.requests = requests.Session()
-
         self.requests.headers.update({
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Cookie": self.ck,
         })
         self.bop = f"{{\"version\":\"10.0\",\"dfp\":\"{self.dfp}\",\"b_ft1\":8}}"
 
@@ -136,34 +134,33 @@ class iqy:
         authKey = md5("d41d8cd98f00b204e9800998ecf8427e" + tm + str(tvid))
         params = {
             "tvid": tvid,
-            "bid": "600",
-            "vid": "",
+            "bid": "800",
             "src": "01010031010000000000",
+            "uid": self.P00003,
+            "k_uid": self.QC005,
+            "authKey": authKey,
+            "dfp": self.dfp,
+            "pck": self.pck,
+            "vid": "1a8f034982b6e3f0b98d84545042b221",
+            "tm": tm,
             "vt": "0",
             "rs": "1",
-            "uid": self.P00003,
             "ori": "pcw",
-            "ps": "0",
-            "k_uid": self.QC005,
+            "ps": "1",
             "pt": "0",
             "d": "0",
             "s": "",
             "lid": "0",
             "cf": "0",
             "ct": "0",
-            "authKey": authKey,
             "k_tag": "1",
-            "dfp": self.dfp,
             "locale": "zh_cn",
-            "pck": self.pck,
             "k_err_retries": "0",
             "up": "",
             "sr": "1",
             "qd_v": "5",
-            "tm": tm,
             "qdy": "u",
             "qds": "0",
-            "ppt": "0",
             "k_ft1": "706436220846084",
             "k_ft4": "1162321298202628",
             "k_ft2": "262335",
@@ -188,6 +185,7 @@ class iqy:
         params = self.get_param(tvid=tvid, vid=vid)
         url = "https://cache.video.iqiyi.com" + params
         res = self.requests.get(url)
+        print(res.url)
         return res.json()
 
     def run(self, url=None):
@@ -276,6 +274,10 @@ class iqy:
                             m3u8data = json.loads(m3u8data)
                             init = m3u8data['payload']['wm_a']['audio_track1']['codec_init']
                             pssh = get_pssh(init)
+                            key_string = get_key(pssh)
+                            cmd = f"N_m3u8DL-RE.exe \"{file} \" --tmp-dir ./cache --save-name \"{name}\" --save-dir \"{savepath}\" --thread-count 16 --download-retry-count 30 --auto-select --check-segments-count " + key_string + " --decryption-binary-path ./mp4decrypt.exe  -M format=mp4"
+                        elif m3u8data.startswith('<?xml'):
+                            pssh = m3u8data.split('<cenc:pssh>')[1].split('</cenc:pssh>')[0]
                             key_string = get_key(pssh)
                             cmd = f"N_m3u8DL-RE.exe \"{file} \" --tmp-dir ./cache --save-name \"{name}\" --save-dir \"{savepath}\" --thread-count 16 --download-retry-count 30 --auto-select --check-segments-count " + key_string + " --decryption-binary-path ./mp4decrypt.exe  -M format=mp4"
                         else:
