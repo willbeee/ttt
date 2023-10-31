@@ -38,9 +38,13 @@ if __name__ == '__main__':
     txck = config["txck"]
     yk = config["yk"]
     aqy = config["aqy"]
-    tx = TX(txck)
-    iq = iqy(aqy)
-    youku = YouKu(yk)
+    try:
+        tx = TX(txck)
+        iq = iqy(aqy)
+        youku = YouKu(yk)
+    except Exception as e:
+        print("配置文件有误，请检查")
+        print(e)
     while True:
             url = input("请输入视频链接：")
             if "v.qq.com" in url:
